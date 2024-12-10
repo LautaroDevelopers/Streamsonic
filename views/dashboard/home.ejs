@@ -1,0 +1,188 @@
+<style>
+    /* Contenedor general */
+    .scroll-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        padding: 16px;
+        width: 100%;
+        scroll-behavior: smooth;
+        scrollbar-width: thin;
+        scrollbar-color: #f86808 transparent;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb {
+        background-color: #f86808;
+        border-radius: 4px;
+    }
+
+    .card {
+        flex: 0 0 auto;
+        width: calc(100% / 3 - 16px);
+        /* Ajustar para móviles */
+        max-width: 300px;
+        min-width: 200px;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .card img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    @media screen and (max-width: 480px) {
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 16px;
+            padding: 16px;
+            width: 100%;
+            scroll-behavior: smooth;
+
+            /* Ocultar scrollbar */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari y Edge */
+        }
+    }
+</style>
+
+
+<div class="cardBox">
+    <div class="slider">
+        <div>
+            <img src="/img/dashboard/1.jpeg" alt="Imagen 1" />
+            <div class="slider-text"></div>
+        </div>
+        <div>
+            <img src="/img/dashboard/2.jpeg" alt="Imagen 2" />
+            <div class="slider-text"></div>
+        </div>
+        <div>
+            <video src="video/video2.mp4" width="100%" autoplay muted playsinline loop></video>
+            <div class="slider-text"></div>
+        </div>
+        <div>
+            <video src="video/video3.mp4" width="100%" autoplay muted playsinline loop></video>
+            <div class="slider-text"></div>
+        </div>
+        <div>
+            <img src="/img/dashboard/3.jpeg" alt="Imagen 3" />
+            <div class="slider-text"></div>
+        </div>
+    </div>
+</div>
+<div class="cardBox flex flex-col px-10">
+    <h2 class="text-2xl font-bold text-center text-black">
+        Añadido Recientemente
+    </h2>
+    <div class="scroll-container">
+        <!-- Tarjetas con contenido -->
+        <% channels.slice(0, 10).forEach(channel=> { %>
+            <a class="card" href="/channel/<%= channel.id %>">
+                <div class="cardName">
+                    <%= channel.name %>
+                </div>
+                <div class="iconBx">
+                    <img src="<%= channel.logo_url %>" alt="<%= channel.name %>">
+                </div>
+            </a>
+            <% }); %>
+
+    </div>
+</div>
+
+<!-- Cargar jQuery y Slick Carousel -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<!-- Inicialización de Slick Carousel -->
+<script>
+    $(document).ready(function () {
+        // Inicializar Slick Carousel
+        $(".slider").slick({
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 4000,
+            arrows: true,
+            adaptiveHeight: true, // Ajustar altura para videos e imágenes
+            pauseOnHover: true,
+        });
+
+        // Detener reproducción de videos al cambiar de slide
+        $(".slider").on("beforeChange", function (event, slick, currentSlide) {
+            const currentVideo = slick.$slides.eq(currentSlide).find("video");
+            if (currentVideo.length) {
+                currentVideo[ 0 ].pause();
+            }
+        });
+
+        // Reproducir videos al llegar al nuevo slide
+        $(".slider").on("afterChange", function (event, slick, currentSlide) {
+            const nextVideo = slick.$slides.eq(currentSlide).find("video");
+            if (nextVideo.length) {
+                nextVideo[ 0 ].play();
+            }
+        });
+    });
+
+
+    const scrollContainer = document.querySelector('.scroll-container');
+    let isDragging = false;
+    let startX, scrollLeft;
+
+    scrollContainer.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX - scrollContainer.offsetLeft;
+        scrollLeft = scrollContainer.scrollLeft;
+    });
+
+    scrollContainer.addEventListener('mouseleave', () => {
+        isDragging = false;
+    });
+
+    scrollContainer.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    scrollContainer.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - scrollContainer.offsetLeft;
+        const walk = (x - startX) * 2; // Ajustar velocidad
+        scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+
+    scrollContainer.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[ 0 ].pageX - scrollContainer.offsetLeft;
+        scrollLeft = scrollContainer.scrollLeft;
+    });
+
+    scrollContainer.addEventListener('touchend', () => {
+        isDragging = false;
+    });
+
+    scrollContainer.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const x = e.touches[ 0 ].pageX - scrollContainer.offsetLeft;
+        const walk = (x - startX) * 2;
+        scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+
+</script>

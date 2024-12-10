@@ -1,0 +1,193 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamsonic - <%= radio.name %>
+    </title>
+    <link rel="shortcut icon" href="<%= radio.logo_url %>" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <style>
+        body {
+            background: url('<%= radio.logo_url %>') no-repeat center center;
+            background-size: cover;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .radio-container {
+            background: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+        }
+
+        .radio-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        #volumeControl {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #F86808 0%, #fff 0%);
+            border-radius: 10px;
+            appearance: none;
+            outline: none;
+            transition: background 0.5s ease;
+        }
+
+        #volumeControl::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            background-color: #F86808;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .volume-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .volume-info div {
+            display: flex;
+            align-items: center;
+        }
+
+        .volume-info i {
+            font-size: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="radio-container">
+        <div class="min-w-full min-h-screen flex flex-col justify-center items-center">
+            <div
+                class="flex justify-center items-center w-48 h-12 bg-white rounded-full absolute right-5 top-5 text-red-900 font-bold">
+                <div id="relogio" class="text-xl"></div>
+            </div>
+            <audio id="radioPlayer">
+                <source src="<%= radio.stream_url %>" type="audio/mpeg">
+                Tu navegador no soporta el reproductor de audio.
+            </audio>
+
+            <img src="<%= radio.logo_url %>" class="h-[200px] w-[200px] mx-auto rounded-[50%]">
+            <div class="text-center text-4xl font-extrabold my-6">
+                <%= radio.name %>
+            </div>
+
+            <!-- Volumen Control -->
+            <div class="min-w-full my-6 px-4">
+                <input type="range" id="volumeControl" value="50" max="100" oninput="changeVolume(event)"
+                    class="w-full h-2 bg-gray-400 rounded-lg appearance-none cursor-pointer focus:outline-none">
+            </div>
+
+            <!-- Volumen Info (Mute, Max, Volume Number) -->
+            <div class="volume-info px-2">
+                <div class="mute" onclick="setMute()">
+                    <i class="ri-volume-down-line"></i>
+                </div>
+
+                <div class="max" onclick="setMax()">
+                    <div class="volume-value mr-4" id="volumeValue">50%</div>
+                    <i class="ri-volume-up-line"></i>
+                </div>
+            </div>
+
+            <div class="controls my-6 px-4">
+                <button id="backButton" onclick="toogleBack()">
+                    <i class="text-4xl ri-arrow-go-back-line"></i>
+                </button>
+                <button id="playButton" onclick="togglePlay()">
+                    <i class="mx-4 text-8xl ri-play-circle-fill"></i>
+                </button>
+                <button>
+                    <i class="text-4xl ri-broadcast-fill text-[#F86808] animate-pulse"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const radioPlayer = document.getElementById('radioPlayer');
+        const playButton = document.getElementById('playButton');
+        const volumeControl = document.getElementById('volumeControl');
+        const volumeValue = document.getElementById('volumeValue');
+
+        function togglePlay() {
+            if (radioPlayer.paused) {
+                radioPlayer.play();
+                playButton.innerHTML = '<i class="text-8xl mx-4 ri-stop-circle-fill"></i>';
+            } else {
+                radioPlayer.pause();
+                playButton.innerHTML = '<i class="text-8xl mx-4 ri-play-circle-fill"></i>';
+            }
+        }
+
+        function changeVolume(event) {
+            const volume = event.target.value / 100;
+            radioPlayer.volume = volume;
+            updateVolumeColor(volume);
+            volumeValue.textContent = `${Math.round(volume * 100)}%`;
+        }
+
+        function updateVolumeColor(volume) {
+            const percentage = volume * 100;
+            volumeControl.style.background = `linear-gradient(to right, #F86808 ${percentage}%, #fff ${percentage}%)`;
+        }
+
+        // Inicializar el color cuando se carga la página
+        updateVolumeColor(volumeControl.value / 100);
+
+        // Función para silenciar
+        function setMute() {
+            radioPlayer.volume = 0;
+            volumeControl.value = 0;
+            updateVolumeColor(0);
+            volumeValue.textContent = '0%';
+        }
+
+        // Función para volumen máximo
+        function setMax() {
+            radioPlayer.volume = 1;
+            volumeControl.value = 100;
+            updateVolumeColor(1);
+            volumeValue.textContent = '100%';
+        }
+
+        // Función para volver a la página anterior
+        function toogleBack() {
+            window.history.back();
+        }
+
+        function reloj() {
+            let elementoID = document.getElementById("relogio");
+            let horalocal = new Date().toLocaleTimeString("es");
+            elementoID.innerHTML = horalocal;
+        }
+        setInterval(reloj, 1000);
+    </script>
+</body>
+
+</html>

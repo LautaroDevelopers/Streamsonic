@@ -1,0 +1,169 @@
+/* log: Sin permiso */
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background-color: #272833;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+}
+
+.video {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  z-index: -1;
+}
+
+.video video {
+  object-fit: cover;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.wrapper {
+  margin: 4rem 0;
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  background-image: linear-gradient(
+    rgba(39, 40, 51, 0.4),
+    rgba(39, 40, 51, 0.4)
+  );
+  background-position: center;
+  background-size: center;
+  color: #fff;
+}
+
+.wrapper h3 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.wrapper p {
+  font-size: 20px;
+}
+
+.comparator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  color: #fff;
+  margin-bottom: 4rem;
+}
+
+.comparator div {
+  width: 50%;
+}
+
+.comparator img {
+  height: 100%;
+  width: 100%;
+  border-radius: 5%;
+  object-fit: cover;
+  margin: 0 auto;
+  border: 1px solid #aaa;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.comparator h3 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.comparator ul {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  list-style: none;
+}
+
+.comparator li {
+  font-size: 15px;
+}
+
+.comparator li span {
+  color: #fff;
+  margin-right: 10px;
+}
+
+.comparator li span i {
+  font-size: 20px;
+  background-color: #0a0;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.comparator-list {
+  padding: 20px;
+  background-image: linear-gradient(
+    rgba(39, 40, 51, 0.4),
+    rgba(39, 40, 51, 0.4)
+  );
+  background-position: center;
+  background-size: center;
+  color: #fff;
+  margin: 25px;
+}
+
+.futbol {
+  background-image: url("./images/fotbol.webp");
+}
+
+.wrapper a {
+  background-color: #0a0;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 10px;
+}
+
+.comparator-content {
+  color: #fff;
+  margin: 25px;
+}
+
+.comparator-content a {
+  background-color: transparent;
+  border: 1px solid #39b9d4;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 10px 15px;
+  border-radius: 5px;
+  color: #39b9d4;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .wrapper {
+    margin: 2rem 0;
+  }
+  .comparator {
+    flex-direction: column;
+  }
+  .comparator div {
+    width: 100%;
+  }
+
+  .comparator-list li {
+    margin-bottom: 50px;
+  }
+
+  .comparator-content {
+    width: 100%;
+    align-items: center;
+  }
+}

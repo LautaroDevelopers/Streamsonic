@@ -1,0 +1,59 @@
+/* note: Estilos generales del slider Header de HOME */
+.slider {
+  width: 90vw;
+  height: 50vh;
+  padding: 10px;
+  overflow: hidden;
+  /* Mantener el recorte para las imágenes */
+  position: relative;
+}
+
+/* Contenedor de cada imagen en el slider */
+.slider div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.3));
+  border-radius: 20px;
+}
+
+/* Estilos para las imágenes */
+.slider div img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Para que la imagen cubra el contenedor sin distorsionarse */
+  object-position: center;
+  position: absolute;
+}
+
+.slider div video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Para que la imagen cubra el contenedor sin distorsionarse */
+  object-position: center;
+  position: absolute;
+}
+
+/* Estilos para el texto centrado sobre las imágenes */
+.slider-text {
+  position: absolute;
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.slider-text {
+  color: #fff;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 480px) {
+  .slider-text {
+    display: none;
+  }
+}

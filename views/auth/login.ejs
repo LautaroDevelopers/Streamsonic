@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="StreamSonic">
+  <title>Streamsonic - Login</title>
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/auth/form.css">
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+</head>
+
+<body class="text-center">
+
+  <main class="bg-[#272833] min-h-screen flex flex-col justify-center items-center">
+    <img src="/img/favicon.ico" class="mb-8 w-40">
+    <h3 class="text-2xl text-center text-white font-bold mb-5">Iniciar Sesion</h3>
+
+    <div class="max-w-md w-full">
+      <form id="formLogin" action="/auth/login" method="POST" class="p-5 rounded border-2 border-[#15a1ff]">
+        <div class="my-4">
+          <input type="text"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500"
+            id="user" name="user" placeholder="Usuario">
+        </div>
+        <div class="my-4">
+          <input type="password"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500"
+            id="pass" name="pass" placeholder="Contraseña">
+        </div>
+        <div class="flex justify-between px-4">
+          <a href="/" type="button" class="bg-red-500 p-4 rounded hover:bg-red-600 transition-colors">Cancelar</a>
+          <button type="submit" class="bg-sky-500 p-4 rounded hover:bg-sky-600 transition-colors">Iniciar
+            Sesión</button>
+        </div>
+      </form>
+    </div>
+
+  </main>
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <% if(alert) { %>
+    <script>
+      Swal.fire({
+        title: '<%= alertTitle %>',
+        text: '<%= alertMessage %>',
+        icon: '<%= alertIcon %>',
+        showConfirmButton: <%= showConfirmButton %>,
+        timer: <%= timer %>
+      }).then(() => {
+          window.location = '/<%= ruta %>'
+        })
+    </script>
+    <% } %>
+</body>
+
+</html>

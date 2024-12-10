@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="StreamSonic">
+    <title>Streamsonic - Registro canal</title>
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/auth/form.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+
+<main class="bg-[#272833] min-h-screen flex flex-col justify-center items-center">
+    <h3 class="text-2xl text-center text-white font-bold mb-5">Registrar Canal</h3>
+    <div class="max-w-md w-full">
+        <form action="/add-channel" method="POST" class="p-5 rounded border-2 border-[#15a1ff]">
+            <div class="my-4">
+                <input type="text" name="name" placeholder="Nombre del canal"
+                    class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="my-4">
+                <input type="text" name="logo_url" placeholder="URL del logo"
+                    class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="my-4">
+                <input type="text" name="video_url" placeholder="URL del video"
+                    class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="my-4">
+                <select name="category"
+                    class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+                    <option value="" disabled selected class="text-gray-400">Seleccionar categoría</option>
+                    <option value="Noticias" class="text-black bg-white hover:bg-gray-100">Noticias</option>
+                    <option value="Cine" class="text-black bg-white hover:bg-gray-100">Cine</option>
+                    <option value="Música" class="text-black bg-white hover:bg-gray-100">Música</option>
+                    <option value="Deporte" class="text-black bg-white hover:bg-gray-100">Deporte</option>
+                    <option value="Religión" class="text-black bg-white hover:bg-gray-100">Religión</option>
+                    <option value="Cultura" class="text-black bg-white hover:bg-gray-100">Cultura</option>
+                    <option value="Anime" class="text-black bg-white hover:bg-gray-100">Anime</option>
+                    <option value="Infantiles" class="text-black bg-white hover:bg-gray-100">Infantiles</option>
+                    <option value="Documentales" class="text-black bg-white hover:bg-gray-100">Documentales</option>
+                    <option value="Entretenimiento" class="text-black bg-white hover:bg-gray-100">Entretenimiento
+                    </option>
+                </select>
+            </div>
+            <div class="my-4">
+                <input type="text" name="location" placeholder="Ubicación"
+                    class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="flex justify-between">
+                <a href="/tv" class="bg-red-500 text-white p-2 rounded">Cancelar</a>
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded">Agregar canal</button>
+            </div>
+        </form>
+    </div>
+</main>

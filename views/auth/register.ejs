@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="StreamSonic">
+  <title>Streamsonic - Registro</title>
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/auth/form.css">
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+</head>
+
+<body class="text-center">
+
+  <main class="bg-[#272833] min-h-screen flex flex-col justify-center items-center">
+    <h3 class="text-2xl text-center text-white font-bold mb-5">Registrar Usuario</h3>
+    <div class="max-w-md w-full">
+      <form action="/auth/register" method="POST" class="p-5 rounded border-2 border-[#15a1ff]">
+        <!-- Nombre de usuario -->
+        <div class="my-4">
+          <input id="name" name="name" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
+            type="text" placeholder="Nombre y Apellido"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Cuenta de usuario -->
+        <div class="my-4">
+          <input id="user" name="user" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"
+            type="text" placeholder="Cuenta de usuario"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Contraseña -->
+        <div class="my-4">
+          <input id="pass" name="pass" type="password" autocomplete="off" data-autocomplete="off"
+            placeholder="Contraseña"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Correo electrónico -->
+        <div class="my-4">
+          <input id="email" name="email" type="email" placeholder="Correo electrónico"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Teléfono -->
+        <div class="my-4">
+          <input id="phone" name="phone" type="text" placeholder="Teléfono"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Departamento -->
+        <div class="my-4">
+          <input id="department" name="department" type="text" placeholder="Departamento"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Dirección -->
+        <div class="my-4">
+          <input id="address" name="address" type="text" placeholder="Dirección"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Provincia -->
+        <div class="my-4">
+          <input id="province" name="province" type="text" placeholder="Provincia"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Codigo postal -->
+        <div class="my-4">
+          <input id="zipcode" name="zipcode" type="text" placeholder="Codigo Postal"
+            class="w-full text-white rounded bg-transparent border-b-2 border-blue-300 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-between px-4">
+          <a href="/" type="button" class="bg-red-500 p-4 rounded hover:bg-red-600 transition-colors">Cancelar</a>
+          <button type="submit" class="bg-sky-500 p-4 rounded hover:bg-sky-600 transition-colors">Registrar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>

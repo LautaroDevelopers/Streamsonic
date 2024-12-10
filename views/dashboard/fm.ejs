@@ -1,0 +1,30 @@
+<div class="cardBox">
+    <% radios.forEach(radio=> { %>
+        <a class="card" href="/fm/<%= radio.id %>">
+            <div class="cardName">
+                <%= radio.name %>
+            </div>
+            <div class="iconBx">
+                <img src="<%= radio.logo_url %>" alt="Logo">
+            </div>
+        </a>
+        <% }); %>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const searchInput = document.getElementById("searchInput");
+        const cards = document.querySelectorAll(".card");
+
+        searchInput.addEventListener("input", (e) => {
+            const filter = e.target.value.toLowerCase();
+            cards.forEach((card) => {
+                const channelName = card.querySelector(".cardName").innerText.toLowerCase();
+                if (channelName.includes(filter)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    });
+</script>

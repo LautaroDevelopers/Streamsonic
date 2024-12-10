@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<head lang="es">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Streamsonic - <%= title %>
+    </title>
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/landing/main.css">
+    <link rel="stylesheet" href="/css/landing/condiciones.css">
+    <link rel="stylesheet" href="/css/landing/home.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <a href="/" class="logo">StreamSonic</a>
+        <button id="abrir" class="abrir-menu"><i class="ri-menu-unfold-4-line"></i></button>
+        <nav class="nav" id="nav">
+            <button class="cerrar-menu" id="cerrar"><i class="ri-menu-fold-4-line"></i></button>
+            <ul class="nav-list">
+                <li><a href="/home">Inicio</a></li>
+                <li><a href="/home#about">Nosotros</a></li>
+                <li>
+                    <a href="https://tienda.televisionalternativa.com.ar">Tienda</a>
+                </li>
+                <li><a href="/auth/login">Acceder</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <%- include(content) %>
+
+        <footer class="footer">
+            <h3>StreamSonic</h3>
+            <div class="footer-links">
+                <div class="contact">
+                    <h5>Contacto</h5>
+                    <ul>
+                        <li><a href="https://www.facebook.com/TelevisionAlternativaoficial/"><i
+                                    class="ri-facebook-fill"></i>
+                                Facebook</a>
+                        </li>
+                        <li><a href="https://www.instagram.com/televisionalternativaoficial/"><i
+                                    class="ri-instagram-fill"></i>
+                                Instagram</a>
+                        </li>
+                        <li><a
+                                href="https://api.whatsapp.com/send?phone=5492634556369&text=Hola%20me%20contacto%20desde%20la%20web%20de%20StreamsonicTV"><i
+                                    class="ri-whatsapp-line"></i> WatsApp</a></li>
+                </div>
+
+                <div class="legal">
+                    <h5>Legal</h5>
+                    <ul>
+                        <li><a href="/home/politicas">Políticas de privacidad</a></li>
+                        <li><a href="/home/condiciones">Condiciones de uso</a></li>
+                    </ul>
+                </div>
+                <div class="nav">
+                    <h5>Navegación</h5>
+                    <ul>
+                        <li><a href="/home">Inicio</a></li>
+                        <li><a href="/home#about">Nosotros</a></li>
+                        <li><a href="/auth/login">Login</a></li>
+                        <li>
+                            <a href="https://tienda.televisionalternativa.com.ar">Tienda</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p>Copyright 2022 -
+                <script>document.write(new Date().getFullYear())</script> <a href="/home">StreamSonic</a>. Todos los
+                derechos
+                reservados.
+            </p>
+        </footer>
+        <script src="js/nav.js"></script>
+</body>
