@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const channelController = require("../controllers/channelController");
+const fmController = require("../controllers/fmController");
 const conexion = require("../database/db");
 
 // Ruta principal
@@ -19,59 +20,24 @@ router.get("/", (req, res) => {
   });
 });
 
-// Ruta para mostrar radios
-router.get("/fm", (req, res) => {
-  conexion.query("SELECT * FROM radios", (err, results) => {
-    if (err) throw err;
-    res.render("layouts/dashboard", {
-      radios: results,
-      title: "Radios",
-      body: "../dashboard/fm",
-    });
-  });
-});
+// Ruta para ver todas las emisoras FM
+router.get("/fm", fmController.getRadios);
 
-// Ruta para agregar un radio
-router.get("/add-fm", (req, res) => {
-  res.render("dashboard/add-fm");
-});
+// Ruta para ver el formulario de agregar emisora FM
+router.get("/add-fm", fmController.addRadioView);
 
-router.post("/add-fm", (req, res) => {
-  const { name, logo_url, stream_url, category, location } = req.body;
-  conexion.query(
-    "INSERT INTO radios (name, logo_url, stream_url, category, location) VALUES (?, ?, ?, ?, ?)",
-    [name, logo_url, stream_url, category, location],
-    (err) => {
-      if (err) throw err;
-      res.redirect("/fm");
-    }
-  );
-});
+// Ruta para subir una emisora FM
+router.post("/add-fm", fmController.uploadRadio);
 
-router.get("/fm/:id", (req, res) => {
-  const radioId = req.params.id;
-  conexion.query(
-    "SELECT * FROM radios WHERE id = ?",
-    [radioId],
-    (err, results) => {
-      if (err) throw err;
-      if (results.length > 0) {
-        res.render("dashboard/fm-player", { radio: results[0] });
-      } else {
-        res.redirect("/fm");
-      }
-    }
-  );
-});
+// Ruta para ver detalles de una emisora FM por ID
+router.get("/fm/:id", fmController.getRadioById);
 
 // Renderizado los canales en la vista TV
 router.get("/tv", channelController.getChannels);
 
-router.get("/add-channel", (req, res) => {
-  res.render("dashboard/add-channel");
-});
+router.get("/add-channel", channelController.addChannelView);
 
-router.post("/add-channel", channelController.addChannel);
+router.post("/add-channel", channelController.uploadChannel);
 
 // Ruta para reproducir un canal
 router.get("/channel/:id", channelController.getChannelById);

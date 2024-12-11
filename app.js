@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+const fileUpload = require("express-fileupload");
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(express.static("public"));
 //para procesar datos enviados desde forms
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(fileUpload());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 //seteamos las variables de entorno
 dotenv.config({ path: "./env/.env" });

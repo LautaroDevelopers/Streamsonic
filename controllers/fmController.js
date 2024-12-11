@@ -3,31 +3,31 @@ const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
 
-// Obtener todos los canales y renderizarlos
-exports.getChannels = (req, res) => {
-  conexion.query("SELECT * FROM channels", (error, results) => {
+// Obtener todas las radios y renderizarlas
+exports.getRadios = (req, res) => {
+  conexion.query("SELECT * FROM radios", (error, results) => {
     if (error) {
-      console.error("Error al obtener los canales:", error);
-      return res.status(500).send("Error al obtener los canales");
+      console.error("Error al obtener las radios:", error);
+      return res.status(500).send("Error al obtener las radios");
     }
     res.render("layouts/dashboard", {
-      title: "TV",
-      body: "../dashboard/channels",
-      channels: results,
+      title: "Radios",
+      body: "../dashboard/fm",
+      radios: results,
     });
   });
 };
 
-// Renderizar la vista de agregar canal
-exports.addChannelView = (req, res) => {
-  res.render("dashboard/add-channel");
+// Renderizar la vista de agregar radio
+exports.addRadioView = (req, res) => {
+  res.render("dashboard/add-fm");
 };
 
-// Agregar un canal
+// Agregar una radio
 const LIMITE_TAMANIO = 500 * 1024; // 500 KB máximo
 
-exports.uploadChannel = (req, res) => {
-  const { name, video_url, category, location } = req.body;
+exports.uploadRadio = (req, res) => {
+  const { name, stream_url, category, location } = req.body;
   const logo = req.files?.logo; // Verifica que se haya recibido el archivo logo
 
   // Validaciones
@@ -35,10 +35,10 @@ exports.uploadChannel = (req, res) => {
     return res.status(400).send("El logo es obligatorio.");
   }
   if (!name) {
-    return res.status(400).send("El nombre del canal es obligatorio.");
+    return res.status(400).send("El nombre de la radio es obligatorio.");
   }
-  if (!video_url) {
-    return res.status(400).send("La URL del video es obligatoria.");
+  if (!stream_url) {
+    return res.status(400).send("La URL del audio es obligatoria.");
   }
   if (!category) {
     return res.status(400).send("La categoría es obligatoria.");
@@ -79,43 +79,43 @@ exports.uploadChannel = (req, res) => {
         // Inserción en la base de datos
         const logoUrl = `/uploads/${logo.name}`;
         const sql =
-          "INSERT INTO channels (name, logo_url, video_url, category, location) VALUES (?, ?, ?, ?, ?)";
+          "INSERT INTO radios (name, logo_url, stream_url, category, location) VALUES (?, ?, ?, ?, ?)";
         conexion.query(
           sql,
-          [name, logoUrl, video_url, category, location || null],
+          [name, logoUrl, stream_url, category, location || null],
           (error) => {
             if (error) {
               console.error(
-                "Error al insertar el canal en la base de datos:",
+                "Error al insertar la radio en la base de datos:",
                 error
               );
               fs.unlinkSync(finalPath); // Elimina el archivo si ocurre un error en la base de datos
-              return res.status(500).send("Error al agregar el canal.");
+              return res.status(500).send("Error al agregar la radio.");
             }
 
-            // Redirige a la vista de agregar canal
-            res.redirect("/add-channel");
+            // Redirige a la vista de agregar radio
+            res.redirect("/add-fm");
           }
         );
       });
   });
 };
 
-// Obtener un canal específico por ID
-exports.getChannelById = (req, res) => {
-  const channelId = req.params.id;
+// Obtener una radio específica por ID
+exports.getRadioById = (req, res) => {
+  const radioId = req.params.id;
   conexion.query(
-    "SELECT * FROM channels WHERE id = ?",
-    [channelId],
+    "SELECT * FROM radios WHERE id = ?",
+    [radioId],
     (error, results) => {
       if (error) {
-        console.error("Error al obtener el canal:", error);
-        return res.status(500).send("Error al obtener el canal");
+        console.error("Error al obtener la radio:", error);
+        return res.status(500).send("Error al obtener la radio");
       }
       if (results.length === 0) {
-        return res.status(404).send("Canal no encontrado");
+        return res.status(404).send("Radio no encontrada");
       }
-      res.render("dashboard/player", { channel: results[0] });
+      res.render("dashboard/fm-player", { radio: results[0] });
     }
   );
 };
