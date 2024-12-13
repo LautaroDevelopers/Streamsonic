@@ -3,6 +3,9 @@ const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
 
+// Límite de tamaño en bytes para las imágenes
+const LIMITE_TAMANIO = 500 * 1024; // 500 KB máximo
+
 // Obtener todos los canales y renderizarlos
 exports.getChannels = (req, res) => {
   conexion.query("SELECT * FROM channels", (error, results) => {
@@ -23,9 +26,7 @@ exports.addChannelView = (req, res) => {
   res.render("dashboard/add-channel");
 };
 
-// Agregar un canal
-const LIMITE_TAMANIO = 500 * 1024; // 500 KB máximo
-
+// Subir un canal
 exports.uploadChannel = (req, res) => {
   const { name, video_url, category, location } = req.body;
   const logo = req.files?.logo; // Verifica que se haya recibido el archivo logo
@@ -38,15 +39,16 @@ exports.uploadChannel = (req, res) => {
     return res.status(400).send("El nombre del canal es obligatorio.");
   }
   if (!video_url) {
-    return res.status(400).send("La URL del video es obligatoria.");
+    return res.status(400).send("La URL del stream es obligatoria.");
   }
   if (!category) {
     return res.status(400).send("La categoría es obligatoria.");
   }
 
-  // Rutas del archivo
+  // Generar nuevo nombre único para la imagen
+  const newLogoName = `${Date.now()}-${Math.round(Math.random() * 1e9)}.webp`; // Cambiar formato a WebP
   const tempPath = path.join(__dirname, "../uploads/temp", logo.name);
-  const finalPath = path.join(__dirname, "../uploads", logo.name);
+  const finalPath = path.join(__dirname, "../uploads", newLogoName);
 
   // Guarda temporalmente el archivo
   logo.mv(tempPath, (err) => {
@@ -55,29 +57,29 @@ exports.uploadChannel = (req, res) => {
       return res.status(500).send("Error al procesar el logo.");
     }
 
-    // Comprimir y guardar el logo
+    // Comprimir y convertir el logo a WebP
     sharp(tempPath)
-      .resize({ width: 500 })
-      .jpeg({ quality: 80 })
-      .toFile(finalPath, (err, info) => {
+      .resize({ width: 500 }) // Ajustar tamaño
+      .toFormat("webp", { quality: 80 }) // Convertir a WebP
+      .toFile(finalPath, (err) => {
         if (err) {
           console.error("Error al procesar la imagen:", err);
-          fs.unlinkSync(tempPath); // Elimina el archivo temporal si ocurre un error
+          fs.unlinkSync(tempPath); // Eliminar archivo temporal
           return res.status(500).send("Error al procesar la imagen.");
         }
 
         // Eliminar el archivo temporal después de procesarlo
         fs.unlinkSync(tempPath);
 
-        // Verificar el tamaño del archivo comprimido
+        // Verificar el tamaño del archivo procesado
         const stats = fs.statSync(finalPath);
         if (stats.size > LIMITE_TAMANIO) {
-          fs.unlinkSync(finalPath); // Eliminar el archivo si no cumple con el tamaño
+          fs.unlinkSync(finalPath); // Eliminar archivo si no cumple el tamaño
           return res.status(400).send("El logo debe ser menor a 500KB.");
         }
 
         // Inserción en la base de datos
-        const logoUrl = `/uploads/${logo.name}`;
+        const logoUrl = `/uploads/${newLogoName}`;
         const sql =
           "INSERT INTO channels (name, logo_url, video_url, category, location) VALUES (?, ?, ?, ?, ?)";
         conexion.query(
@@ -89,12 +91,12 @@ exports.uploadChannel = (req, res) => {
                 "Error al insertar el canal en la base de datos:",
                 error
               );
-              fs.unlinkSync(finalPath); // Elimina el archivo si ocurre un error en la base de datos
+              fs.unlinkSync(finalPath); // Elimina el archivo si ocurre un error
               return res.status(500).send("Error al agregar el canal.");
             }
 
             // Redirige a la vista de agregar canal
-            res.redirect("/add-channel");
+            res.redirect("/tv");
           }
         );
       });

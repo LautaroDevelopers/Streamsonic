@@ -23,7 +23,7 @@ exports.addRadioView = (req, res) => {
   res.render("dashboard/add-fm");
 };
 
-// Agregar una radio
+// Agregar una radio con compresión y renombrado de imagen
 const LIMITE_TAMANIO = 500 * 1024; // 500 KB máximo
 
 exports.uploadRadio = (req, res) => {
@@ -44,9 +44,12 @@ exports.uploadRadio = (req, res) => {
     return res.status(400).send("La categoría es obligatoria.");
   }
 
+  // Generar un nuevo nombre único para la imagen
+  const newFileName = `${Date.now()}-${Math.round(Math.random() * 1e9)}.webp`;
+
   // Rutas del archivo
   const tempPath = path.join(__dirname, "../uploads/temp", logo.name);
-  const finalPath = path.join(__dirname, "../uploads", logo.name);
+  const finalPath = path.join(__dirname, "../uploads", newFileName);
 
   // Guarda temporalmente el archivo
   logo.mv(tempPath, (err) => {
@@ -55,11 +58,11 @@ exports.uploadRadio = (req, res) => {
       return res.status(500).send("Error al procesar el logo.");
     }
 
-    // Comprimir y guardar el logo
+    // Comprimir, convertir a WebP y guardar el logo
     sharp(tempPath)
-      .resize({ width: 500 })
-      .jpeg({ quality: 80 })
-      .toFile(finalPath, (err, info) => {
+      .resize({ width: 500 }) // Redimensionar a un máximo de 500px de ancho
+      .webp({ quality: 80 }) // Convertir a WebP con calidad del 80%
+      .toFile(finalPath, (err) => {
         if (err) {
           console.error("Error al procesar la imagen:", err);
           fs.unlinkSync(tempPath); // Elimina el archivo temporal si ocurre un error
@@ -77,7 +80,7 @@ exports.uploadRadio = (req, res) => {
         }
 
         // Inserción en la base de datos
-        const logoUrl = `/uploads/${logo.name}`;
+        const logoUrl = `/uploads/${newFileName}`;
         const sql =
           "INSERT INTO radios (name, logo_url, stream_url, category, location) VALUES (?, ?, ?, ?, ?)";
         conexion.query(
@@ -93,8 +96,8 @@ exports.uploadRadio = (req, res) => {
               return res.status(500).send("Error al agregar la radio.");
             }
 
-            // Redirige a la vista de agregar radio
-            res.redirect("/add-fm");
+            // Redirige a la vista principal de FM
+            res.redirect("/fm");
           }
         );
       });
