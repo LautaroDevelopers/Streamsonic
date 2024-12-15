@@ -124,7 +124,10 @@ exports.login = async (req, res) => {
             }
 
             // Crear sesión y registrar en la tabla active_sessions
-            const token = jwt.sign({ id: userId }, process.env.JWT_SECRETO);
+            const id = results[0].id;
+            const token = jwt.sign({ id: id }, process.env.JWT_SECRETO, {
+              expiresIn: process.env.JWT_TIEMPO_EXPIRA,
+            });
 
             conexion.query(
               "INSERT INTO active_sessions (user_id, session_token) VALUES (?, ?)",

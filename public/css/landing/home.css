@@ -3,9 +3,15 @@
 body {
   margin: 0;
   padding: 0;
-
   background-color: #272833;
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+}
+
+.container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: -1;
 }
 
 .video {
@@ -113,16 +119,25 @@ body {
     rgba(39, 40, 51, 0.4)
   );
   background-position: center;
-  background-size: center;
+  background-size: cover;
   color: #fff;
   margin: 25px;
 }
 
 .futbol {
-  background-image: url("./images/fotbol.webp");
+  background: transparent;
 }
 
 .wrapper a {
+  background-color: #0a0;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 10px;
+}
+
+.storebtn {
   background-color: #0a0;
   color: #fff;
   padding: 10px 15px;

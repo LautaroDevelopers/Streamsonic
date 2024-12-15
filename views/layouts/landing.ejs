@@ -30,51 +30,53 @@
         </nav>
     </header>
 
-    <%- include(content) %>
+    <div class="flex flex-col justify-center align-center min-w-full min-h-full">
+        <%- include(content) %>
+    </div>
 
-        <footer class="footer">
-            <h3>StreamSonic</h3>
-            <div class="footer-links">
-                <div class="contact">
-                    <h5>Contacto</h5>
-                    <ul>
-                        <li><a href="https://www.facebook.com/TelevisionAlternativaoficial/"><i
-                                    class="ri-facebook-fill"></i>
-                                Facebook</a>
-                        </li>
-                        <li><a href="https://www.instagram.com/televisionalternativaoficial/"><i
-                                    class="ri-instagram-fill"></i>
-                                Instagram</a>
-                        </li>
-                        <li><a
-                                href="https://api.whatsapp.com/send?phone=5492634556369&text=Hola%20me%20contacto%20desde%20la%20web%20de%20StreamsonicTV"><i
-                                    class="ri-whatsapp-line"></i> WatsApp</a></li>
-                </div>
-
-                <div class="legal">
-                    <h5>Legal</h5>
-                    <ul>
-                        <li><a href="/home/politicas">Políticas de privacidad</a></li>
-                        <li><a href="/home/condiciones">Condiciones de uso</a></li>
-                    </ul>
-                </div>
-                <div class="nav">
-                    <h5>Navegación</h5>
-                    <ul>
-                        <li><a href="/home">Inicio</a></li>
-                        <li><a href="/home#about">Nosotros</a></li>
-                        <li><a href="/auth/login">Login</a></li>
-                        <li>
-                            <a href="https://tienda.televisionalternativa.com.ar">Tienda</a>
-                        </li>
-                    </ul>
-                </div>
+    <footer class="footer">
+        <h3>StreamSonic</h3>
+        <div class="footer-links">
+            <div class="contact">
+                <h5>Contacto</h5>
+                <ul>
+                    <li><a href="https://www.facebook.com/TelevisionAlternativaoficial/"><i
+                                class="ri-facebook-fill"></i>
+                            Facebook</a>
+                    </li>
+                    <li><a href="https://www.instagram.com/televisionalternativaoficial/"><i
+                                class="ri-instagram-fill"></i>
+                            Instagram</a>
+                    </li>
+                    <li><a
+                            href="https://api.whatsapp.com/send?phone=5492634556369&text=Hola%20me%20contacto%20desde%20la%20web%20de%20StreamsonicTV"><i
+                                class="ri-whatsapp-line"></i> WatsApp</a></li>
             </div>
-            <p>Copyright 2022 -
-                <script>document.write(new Date().getFullYear())</script> <a href="/home">StreamSonic</a>. Todos los
-                derechos
-                reservados.
-            </p>
-        </footer>
-        <script src="js/nav.js"></script>
+
+            <div class="legal">
+                <h5>Legal</h5>
+                <ul>
+                    <li><a href="/home/politicas">Políticas de privacidad</a></li>
+                    <li><a href="/home/condiciones">Condiciones de uso</a></li>
+                </ul>
+            </div>
+            <div class="nav">
+                <h5>Navegación</h5>
+                <ul>
+                    <li><a href="/home">Inicio</a></li>
+                    <li><a href="/home#about">Nosotros</a></li>
+                    <li><a href="/auth/login">Acceder</a></li>
+                    <li>
+                        <a href="https://tienda.televisionalternativa.com.ar">Tienda</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p>Copyright 2022 -
+            <script>document.write(new Date().getFullYear())</script> <a href="/home">StreamSonic</a>. Todos los
+            derechos
+            reservados.
+        </p>
+    </footer>
+    <script src="js/nav.js"></script>
 </body>
